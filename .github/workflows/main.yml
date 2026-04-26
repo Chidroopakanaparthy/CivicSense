@@ -1,0 +1,47 @@
+# Evaluation Criterion: Testing (CI/CD)
+name: CivicSense CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  backend-test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    - name: Install Backend Dependencies
+      run: |
+        cd backend
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    - name: Run Pytest
+      run: |
+        cd backend
+        pytest
+      env:
+        GOOGLE_CLOUD_PROJECT: "mock-project"
+        GOOGLE_CIVIC_API_KEY: "mock-key"
+
+  frontend-test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '20'
+    - name: Install Frontend Dependencies
+      run: |
+        cd frontend
+        npm install
+    - name: Run Jest Tests
+      run: |
+        cd frontend
+        npm test
