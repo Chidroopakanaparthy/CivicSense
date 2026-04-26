@@ -37,7 +37,7 @@ class VertexAIService:
         
         # Initialize Gemini 1.5 Flash for high performance and low latency
         self.model = GenerativeModel(
-            "gemini-1.5-flash",
+            "gemini-2.5-flash",
             system_instruction=[SYSTEM_PROMPT]
         )
         
