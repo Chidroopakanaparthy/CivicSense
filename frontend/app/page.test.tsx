@@ -3,8 +3,8 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Home from './page';
 
-// Mock the ChatBox component to simplify page testing
-jest.mock('@/components/ChatBox', () => {
+// Mock the ChatBox component using relative path
+jest.mock('../components/ChatBox', () => {
   return function MockChatBox() {
     return <div data-testid="mock-chatbox">Mock ChatBox</div>;
   };
