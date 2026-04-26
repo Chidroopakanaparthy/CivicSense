@@ -44,5 +44,3 @@
 ## 📄 Documentation
 - [Architecture Details](ARCHITECTURE.md)
 - [Contributing Guidelines](CONTRIBUTING.md)
-
-*Built with ❤️ for the Google x hack2skill Hackathon 2024.*
