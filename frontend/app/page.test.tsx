@@ -11,10 +11,12 @@ jest.mock('../components/ChatBox', () => {
 });
 
 describe('Home Page', () => {
-  it('renders the main heading', () => {
+  it('renders the main heading and branding', () => {
     render(<Home />);
-    expect(screen.getByText(/Empowering Your/i)).toBeInTheDocument();
-    expect(screen.getByText(/Democratic/i)).toBeInTheDocument();
+    // Task 2: Fix Frontend Query Specificity
+    // Using getAllByText[0] to avoid collisions with duplicate text in feature cards
+    expect(screen.getAllByText(/Empowering Your/i)[0]).toBeInTheDocument();
+    expect(screen.getAllByText(/Democratic/i)[0]).toBeInTheDocument();
   });
 
   it('contains the ChatBox component', () => {

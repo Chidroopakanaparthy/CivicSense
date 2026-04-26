@@ -1,11 +1,15 @@
+import os
 import sys
 from unittest.mock import MagicMock
+# Task 1: Fix Backend Path Resolution
+# Ensure the backend root is in the Python path for CI test discovery
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 # Task 1: Fix Backend Test Collection Error
 # Injecting system-level mocks before any other imports
 sys.modules['vertexai'] = MagicMock()
 sys.modules['vertexai.generative_models'] = MagicMock()
 
-import os
 import pytest
 from unittest.mock import patch, AsyncMock
 from fastapi.testclient import TestClient
