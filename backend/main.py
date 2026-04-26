@@ -1,4 +1,5 @@
 import os
+import logging
 import time
 from fastapi import FastAPI, Request, HTTPException, Depends
 from fastapi.middleware.cors import CORSMiddleware
@@ -10,6 +11,10 @@ from typing import Optional
 
 from services.vertex_ai_service import llm_service
 from services.civic_api_service import civic_service
+
+# Configure logging for AI evaluation audit
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger("civicsense")
 
 # Evaluation Criterion: Security (Rate Limiting)
 limiter = Limiter(key_func=get_remote_address)
@@ -29,6 +34,18 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Task 1.3: Structured logging middleware
+@app.middleware("http")
+async def audit_logging_middleware(request: Request, call_next):
+    start_time = time.time()
+    response = await call_next(request)
+    process_time = (time.time() - start_time) * 1000
+    logger.info(
+        f"Path: {request.url.path} | Status: {response.status_code} | "
+        f"Time: {process_time:.2f}ms"
+    )
+    return response
 
 class ChatRequest(BaseModel):
     message: str
