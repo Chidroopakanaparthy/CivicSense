@@ -28,27 +28,36 @@ def test_read_root():
     assert response.status_code == 200
     assert response.json()["status"] == "ok"
 
-@patch("main.llm_service.get_response", new_callable=AsyncMock)
-def test_chat_endpoint(mock_get_response):
+def test_chat_endpoint():
     """
-    Test the chat endpoint with mocked LLM service.
-    Bypasses real network calls for CI.
+    Test the chat endpoint with mocked GenerativeModel.
+    Bypasses real network calls by configuring the system-level mock.
     """
-    mock_get_response.return_value = MagicMock()
-    mock_get_response.return_value.text = "Mocked AI Response"
-    mock_get_response.return_value.cached = False
+    from vertexai.generative_models import GenerativeModel
+    
+    # Task 1: Configure the Mock Return Value
+    # Configure the nested mock structure: GenerativeModel().generate_content_async().text
+    mock_response = MagicMock()
+    mock_response.text = "This is a mocked AI response"
+    
+    # Vertex AI service uses generate_content_async
+    GenerativeModel.return_value.generate_content_async = AsyncMock(return_value=mock_response)
     
     response = client.post("/api/chat", json={"message": "What are my civic duties?"})
     
     assert response.status_code == 200
     assert "text" in response.json()
+    assert response.json()["text"] == "This is a mocked AI response"
 
 def test_rate_limiter():
-    """Verify rate limiter unblocks CI without real backend activity."""
-    with patch("main.llm_service.get_response", new_callable=AsyncMock) as mock_llm:
-        mock_llm.return_value = MagicMock(text="resp", cached=False)
-        for _ in range(5):
-            client.post("/api/chat", json={"message": "hi"})
-        
-        response = client.post("/api/chat", json={"message": "limited"})
-        assert response.status_code == 429
+    """Verify rate limiter triggers correctly using the mocked service."""
+    from vertexai.generative_models import GenerativeModel
+    mock_response = MagicMock(text="resp")
+    GenerativeModel.return_value.generate_content_async = AsyncMock(return_value=mock_response)
+    
+    # Make 6 requests (limit is 5/minute)
+    for _ in range(5):
+        client.post("/api/chat", json={"message": "hi"})
+    
+    response = client.post("/api/chat", json={"message": "limited"})
+    assert response.status_code == 429
