@@ -14,7 +14,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# Evaluation Criterion: Security & Neutrality (System Instructions)
+# System Instructions for the Evaluation Criterion: Security & Neutrality 
 SYSTEM_PROMPT = """You are CivicSense, an impartial election assistant. 
 You must strictly refuse to answer questions unrelated to voting processes, timelines, or civic duties. 
 You must maintain strict political neutrality and never endorse, criticize, or show bias toward any candidate or party. 
