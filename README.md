@@ -2,7 +2,7 @@
 
 **CivicSense** is an enterprise-grade, impartial AI assistant built for the Google x hack2skill Prompt Wars Hackathon. It provides verified voting information and civic guidance powered by Google Vertex AI Search Grounding.
 
-## 🌟 Strategic Fulfillment of 6 Evaluation Criteria
+## Strategic Fulfillment of 6 Evaluation Criteria
 
 ### 1. Code Quality
 - **Full Type Safety:** TypeScript 5.0+ on the frontend and strict Python 3.11 type hints on the backend.
@@ -34,13 +34,13 @@
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 - **Frontend:** Next.js 14, TypeScript, Tailwind CSS, Firebase.
 - **Backend:** FastAPI, Python 3.11, Vertex AI SDK, Google Cloud Run.
 - **AI:** Gemini 2.5 Flash with Native Grounding.
 
 ---
 
-## 📄 Documentation
+## Documentation
 - [Architecture Details](ARCHITECTURE.md)
 - [Contributing Guidelines](CONTRIBUTING.md)
