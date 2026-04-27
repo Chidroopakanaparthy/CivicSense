@@ -17,7 +17,7 @@ class CivicApiService:
         self.base_url = "https://www.googleapis.com/civicinfo/v2"
         
         if not self.api_key:
-            # Note: In a production app, we would log a warning here if not provided
+            # Note: In a production we would log a warning here if not provided
             pass
 
     async def get_voter_info(self, address: str, election_id: Optional[int] = None) -> Dict[str, Any]:
