@@ -35,7 +35,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Task 1.3: Structured logging middleware
+# Task : Structured logging middleware
 @app.middleware("http")
 async def audit_logging_middleware(request: Request, call_next) -> Any:
     """
@@ -57,7 +57,7 @@ async def audit_logging_middleware(request: Request, call_next) -> Any:
     )
     return response
 
-# Task 2.3: Enhanced Pydantic models with strict constraints
+# Task : Enhanced Pydantic models with strict constraints
 class ChatRequest(BaseModel):
     """Payload for AI chat requests with strict validation."""
     message: str = Field(..., max_length=500, description="User query (max 500 characters to prevent DoS)")
@@ -127,6 +127,6 @@ async def list_elections() -> Dict[str, Any]:
 
 if __name__ == "__main__":
     import uvicorn
-    # Task 1.2: Dynamic port binding for Cloud Run environment compatibility
+    # Task : Dynamic port binding for Cloud Run environment compatibility
     port = int(os.environ.get("PORT", 8080))
     uvicorn.run(app, host="0.0.0.0", port=port)
