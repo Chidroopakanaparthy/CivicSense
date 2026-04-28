@@ -42,12 +42,12 @@ class VertexAIService:
             
         vertexai.init(project=project_id, location=location)
         
-        # Task 1.3: Enable Google Search Grounding for real-time election data
+        # Task : Enable Google Search Grounding for real-time election data
         search_tool = Tool.from_google_search_retrieval(
             grounding.GoogleSearchRetrieval()
         )
         
-        # Task 1.4: Strict Safety Settings to block harmful content
+        # Task : Strict Safety Settings to block harmful content
         self.safety_settings = [
             SafetySetting(
                 category=HarmCategory.HARM_CATEGORY_HATE_SPEECH,
@@ -67,7 +67,7 @@ class VertexAIService:
             ),
         ]
         
-        # Task 1.2: Initialize Gemini 2.5 Flash with Native System Instructions
+        # Task : Initialize Gemini 2.5 Flash with Native System Instructions
         self.model = GenerativeModel(
             "gemini-2.5-flash",
             system_instruction=[SYSTEM_PROMPT],
